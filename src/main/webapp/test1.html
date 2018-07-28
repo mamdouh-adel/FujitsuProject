@@ -1,0 +1,86 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  
+  <!-- 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.js"></script>
+   -->
+  
+    <link rel="stylesheet" href="res/css/bootstrap.min.css">
+  <script src="res/js/jquery.min.js"></script>
+  <script src="res/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="res/css/datatables.min.css"/>
+  <script type="text/javascript" src="res/js/datatables.min.js"></script>
+  
+  <title>Clients Table Test</title>
+  
+ <script type="text/javascript" class="init">
+ 
+  $(document).ready(function(){
+    var arrayReturn = [];
+            $.ajax({
+                 dataType: "json",
+                 contentType: "application/json",
+                url: "http://192.168.1.215:8080/FujitsuTest/api/client_service",
+                type: "POST",
+                async: false,
+                success: function (data) {
+					for (var i = 0, len = data.length; i < len; i++) {
+
+						arrayReturn.push([ data[i].id, data[i].name, data[i].lastname, data[i].register, data[i].datebirth ]);
+					}
+              //      console.log(arrayReturn);
+				inittable(arrayReturn);
+                }
+            });
+	function inittable(data) {	
+		//console.log(data);
+		$('#clients').DataTable( {
+			responsive: true,
+			"fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			//	console.error(aData[1]);
+	            var clientName =aData[1];
+	            $(nRow).attr("href", "/client/" + clientName + "/");
+	            $(nRow).css( 'cursor', 'pointer' );
+	            $(nRow).click(function(){
+	                window.location = $(this).attr('href');
+	                return false;
+	            });
+	        },
+			"aaData": data,
+			"dataSrc": function ( json ) {
+			//	console.log(json);
+			  for ( var i=0, ien=json.data.length ; i<ien ; i++ ) {
+				json.data[i][0] = '<a href="/message/'+json.data[i][0]+'>View message</a>';
+			  }
+			  return json.data;
+			}
+		} );
+	}
+  });
+</script>
+
+</head>
+<body>
+  <div class="container" style="padding:5px 0px;">
+    <h1>Clients List</h1>
+	<table id="clients" class="display" cellspacing="0" width="100%" >
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                 <th>Last name</th>
+                <th>Birth Date</th>
+                <th>Register</th>
+            </tr>
+        </thead>
+        
+    </table>
+  </div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <title>Products Details Test</title>
+	
+  <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+ 
+ 
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+ 
+    
+    	<style type="text/css" class="init">
+
+            /* Variables
+================================== */
+/* Tables
+================================== */
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:400,700);
+.Rtable {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 3em 0;
+  padding: 0;
+}
+.Rtable-cell {
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 100%;
+  padding: 0.8em 1.2em;
+  overflow: hidden;
+  list-style: none;
+  border: solid 3px white;
+  background: rgba(112, 128, 144, 0.2);
+}
+.Rtable-cell > h1,
+.Rtable-cell > h2,
+.Rtable-cell > h3,
+.Rtable-cell > h4,
+.Rtable-cell > h5,
+.Rtable-cell > h6 {
+  margin: 0;
+}
+/* Table column sizing
+================================== */
+.Rtable--2cols > .Rtable-cell {
+  width: 50%;
+}
+.Rtable--3cols > .Rtable-cell {
+  width: 33.33%;
+}
+.Rtable--4cols > .Rtable-cell {
+  width: 25%;
+}
+.Rtable--5cols > .Rtable-cell {
+  width: 20%;
+}
+.Rtable--6cols > .Rtable-cell {
+  width: 16.6%;
+}
+/* Page styling
+================================== */
+html {
+  height: 100%;
+  background-color: #EEE;
+}
+body {
+  box-sizing: border-box;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 2em;
+  max-width: 800px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.2em;
+  background-color: white;
+  border: double 3px #DDD;
+  border-top: none;
+  border-bottom: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+}
+h3 {
+  font-size: 1.2em;
+}
+h4 {
+  font-size: 1em;
+}
+strong {
+  color: #434d57;
+}
+	</style>
+    
+    	<script type="text/javascript" class="init">
+
+          $(document).ready(function(){
+    var arrayReturn = [];
+            $.ajax({
+                 dataType: "json",
+                 contentType: "application/json",
+                url: "http://192.168.1.215:8080/FujitsuTest/api/product/h14",
+                type: "POST",
+                async: false,
+                success: function (data) {
+					for (var i = 0, len = data.length; i < len; i++) {
+
+						arrayReturn.push([ data[i].prod_code, data[i].prod_model, data[i].prod_size, data[i].prod_color, data[i].prod_degree ]);
+					}
+                    console.log(arrayReturn);
+                    
+                    document.getElementById('prodCode').innerHTML = arrayReturn[0][0];
+                    document.getElementById('prodModel').innerHTML = arrayReturn[0][1];
+                    document.getElementById('prodSize').innerHTML = arrayReturn[0][2];
+                    document.getElementById('prodColor').innerHTML = arrayReturn[0][3];
+                    document.getElementById('prodDegree').innerHTML = arrayReturn[0][4];
+			
+                }
+            });
+
+  });
+
+
+	</script>
+    
+    </head>
+    <body>
+        
+<h2>Product Details</h2>
+        
+<div class="Rtable Rtable--2cols">
+
+  <div class="Rtable-cell"><h3>Product Code:</h3></div>
+  <div class="Rtable-cell" id="prodCode"></div>
+ 
+
+  <div class="Rtable-cell"><h3>Product Model:</h3></div>
+  <div class="Rtable-cell" id="prodModel"></div>
+
+
+  <div class="Rtable-cell"><h3>Product Size:</h3></div>
+  <div class="Rtable-cell" id="prodSize"></div>
+    
+  <div class="Rtable-cell"><h3>Product Color:</h3></div>
+  <div class="Rtable-cell" id="prodColor"></div>
+    
+  <div class="Rtable-cell"><h3>Product Degree:</h3></div>
+  <div class="Rtable-cell" id="prodDegree"></div>
+
+</div>
+    
+    </body>
+</html>

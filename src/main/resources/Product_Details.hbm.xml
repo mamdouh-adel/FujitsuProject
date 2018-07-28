@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 14, 2018 3:00:54 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ua.at.mamdouh.model.Product_Details" table="PRODUCT_DETAILS">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="prod_size" type="java.lang.String">
+            <column name="PROD_SIZE" />
+        </property>
+        <property name="prod_degree" type="java.lang.String">
+            <column name="PROD_DEGREE" />
+        </property>
+        <property name="prod_color" type="java.lang.String">
+            <column name="PROD_COLOR" />
+        </property>
+        <property name="prod_code" type="java.lang.String">
+            <column name="PROD_CODE" />
+        </property>
+        <property name="prod_model" type="java.lang.String">
+            <column name="PROD_MODEL" />
+        </property>
+    </class>
+</hibernate-mapping>

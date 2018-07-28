@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>Products Test</title>
+	
+	<link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+
+<!--
+
+ <link rel="stylesheet" href="res/css/bootstrap.min.css">
+  <link rel="stylesheet" href="res/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="res/css/fixedHeader.bootstrap.min.css">
+  <link rel="stylesheet" href="res/css/responsive.bootstrap.min.css">
+ 
+ 
+  <script src="res/js/jquery-3.3.1.js"></script>
+  <script src="res/js/jquery.dataTables.min.js"></script>
+  <script src="res/js/dataTables.bootstrap.min.js"></script>
+  <script src="res/js/dataTables.fixedHeader.min.js"></script>
+  <script src="res/js/dataTables.responsive.min.js"></script>
+  <script src="res/js/responsive.bootstrap.min.js"></script>
+  
+  -->
+ 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+ 
+ 
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/fixedheader/192.168.1.2153.1.5/js/dataTables.fixedHeader.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+  
+	<style type="text/css" class="init">
+	
+	</style>
+	
+	<script type="text/javascript" class="init">
+
+          $(document).ready(function(){
+    var arrayReturn = [];
+            $.ajax({
+                 dataType: "json",
+                 contentType: "application/json",
+                url: "http://192.168.1.215:8080/FujitsuTest/api/product_service",
+                type: "POST",
+                async: false,
+                success: function (data) {
+					for (var i = 0, len = data.length; i < len; i++) {
+
+						arrayReturn.push([ data[i].prod_code, data[i].prod_comp, data[i].prod_type, data[i].prod_model ]);
+					}
+					
+          //          console.log(arrayReturn);
+        //            console.log("out of loop..................");
+                    
+				inittable(arrayReturn);
+                }
+            });
+	function inittable(data) {	
+		//console.log(data);
+		$('#products').DataTable( {
+//			responsive: true,
+		    /*        responsive: {
+		        details: false
+		    },*/
+		    "sScrollX": "100%",
+		    "sScrollXInner": "100%",
+			"fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			//	console.error(aData[1]);
+	            var prodCode =aData[0];
+	            $(nRow).attr("href", "/product/" + prodCode + "/");
+	            $(nRow).css( 'cursor', 'pointer' );
+	            $(nRow).click(function(){
+	                window.location = $(this).attr('href');
+	                return false;
+	            });
+	        },
+			"aaData": data,
+			"dataSrc": function ( json ) {
+			//	console.log(json);
+			  for ( var i=0, ien=json.data.length ; i<ien ; i++ ) {
+				json.data[i][0] = '<a href="/message/'+json.data[i][0]+'>View message</a>';
+			  }
+			  return json.data;
+			}
+		} );
+	}
+  });
+
+
+	</script>
+</head>
+<body class="wide comments example dt-example-bootstrap">
+
+  <h1>Product List</h1>
+  
+				<table id="products" class="table table-striped table-bordered nowrap" style="width:100%">
+				
+                      <thead>
+            <tr>
+                <th>Product Code</th>
+                <th>Product Company</th>
+                 <th>Product Type</th>
+                <th>Product Model</th>
+            </tr>
+        </thead>
+                    
+				</table>
+				
+</body>
+</html>

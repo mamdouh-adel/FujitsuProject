@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2018 11:08:32 AM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="ua.at.mamdouh.client.Client" table="CLIENT">
+        <id name="cli_number" type="int">
+            <column name="CLI_NUMBER" />
+            <generator class="assigned" />
+        </id>
+        <property name="cli_name" type="java.lang.String">
+            <column name="CLI_NAME" />
+        </property>
+        <property name="cli_lastname" type="java.lang.String">
+            <column name="CLI_LASTNAME" />
+        </property>
+        <property name="cli_register" type="java.lang.String">
+            <column name="CLI_REGISTER" />
+        </property>
+        <property name="cli_datebirth" type="java.util.Date">
+            <column name="CLI_DATEBIRTH" />
+        </property>
+    </class>
+</hibernate-mapping>
